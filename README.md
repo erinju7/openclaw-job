@@ -22,6 +22,61 @@ An AI-powered job search assistant that helps you find relevant jobs based on yo
 | Overseas (UK/US/Europe) | LinkedIn, Indeed, Google Jobs |
 | China | LinkedIn China, Boss直聘 |
 
+## Setup
+
+### 1. OpenCLAW Setup
+
+If you don't have OpenCLAW yet:
+
+```bash
+# Install OpenCLAW
+npm install -g openclaw
+
+# Start the gateway
+openclaw gateway start
+```
+
+### 2. Notion Setup
+
+**Step 1: Create a Notion Integration**
+1. Go to https://www.notion.so/my-integrations
+2. Click **"+ New integration"**
+3. Select **"Internal integration"** (NOT Public)
+4. Give it a name (e.g., "Job Hunter")
+5. Click **Create**
+6. Copy the **Internal Integration Secret** (starts with `ntn_` or `secret_`)
+
+**Step 2: Save the API Key**
+
+Save your Notion API key:
+```bash
+mkdir -p ~/.config/notion
+echo "YOUR_NOTION_API_KEY" > ~/.config/notion/api_key
+```
+
+**Step 3: Create a Notion Page for Job Tracking**
+1. Create a new page in Notion (e.g., "Job Applications")
+2. Click the **⋮** menu → **Connect to** → Select your integration
+3. Create a database with these properties:
+   - **Job Title** (Title)
+   - **Company** (Text)
+   - **Status** (Select: Wishlist / Applied / Interview / Offer / Rejected)
+   - **Link** (URL)
+   - **Requirements** (Text)
+   - **Notes** (Text)
+   - **Date Applied** (Date)
+
+### 3. Add the Skill to OpenCLAW
+
+```bash
+# Copy the skill to your OpenCLAW workspace
+mkdir -p ~/.openclaw/workspace/skills
+cp -r smart-job-hunter ~/.openclaw/workspace/skills/
+
+# Restart OpenCLAW gateway
+openclaw gateway restart
+```
+
 ## Usage
 
 1. **Start a job search** - Tell the AI:
@@ -49,14 +104,6 @@ Create a Notion database with these fields:
 | Requirements | Text | Key requirements from JD |
 | Notes | Text | Match analysis |
 | Date Applied | Date | When you applied |
-
-## Setup
-
-1. Clone this repository or copy the `SKILL.md` file
-2. Configure Notion API:
-   - Create an integration at https://www.notion.so/my-integrations
-   - Share a page with the integration
-   - Save the API key
 
 ## Example
 
